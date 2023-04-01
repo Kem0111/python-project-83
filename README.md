@@ -1,5 +1,5 @@
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/Kem0111/python-project-83/workflows/hexlet-check/badge.svg)](https://github.com/Kem0111/python-project-83/actions) <a href="https://codeclimate.com/github/Kem0111/python-project-83/maintainability"><img src="https://api.codeclimate.com/v1/badges/2b38da6472d08e59a8cc/maintainability" /></a> <a href="https://codeclimate.com/github/Kem0111/python-project-83/test_coverage"><img src="https://api.codeclimate.com/v1/badges/2b38da6472d08e59a8cc/test_coverage" /></a>
+[![Actions Status](https://github.com/Kem0111/python-project-83/workflows/hexlet-check/badge.svg)](https://github.com/Kem0111/python-project-83/actions) [![Analyzer CI](https://github.com/Kem0111/python-project-83/actions/workflows/page_analyzer-check.yml/badge.svg)](https://github.com/Kem0111/python-project-83/actions/workflows/page_analyzer-check.yml) <a href="https://codeclimate.com/github/Kem0111/python-project-83/maintainability"><img src="https://api.codeclimate.com/v1/badges/2b38da6472d08e59a8cc/maintainability" /></a> <a href="https://codeclimate.com/github/Kem0111/python-project-83/test_coverage"><img src="https://api.codeclimate.com/v1/badges/2b38da6472d08e59a8cc/test_coverage" /></a>
 
 ### SEO Page Analyzer
 
