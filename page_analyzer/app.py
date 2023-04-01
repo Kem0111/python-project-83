@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from dotenv import load_dotenv
 import os
 
@@ -11,4 +11,4 @@ api_key = os.getenv("API_KEY")
 
 @app.route('/')
 def index():
-    return 'Hello'
+    return render_template('index.html')

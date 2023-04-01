@@ -17,7 +17,7 @@ reporter:
 	coverage report -m
 
 test-cov:
-	poetry run pytest --cov-report xml --cov=gendiff tests/  
+	poetry run pytest --cov-report xml --cov=page_analyzer tests/  
 
 dev:
 	poetry run flask --app page_analyzer:app run
