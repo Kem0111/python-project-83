@@ -1,4 +1,4 @@
-name: Gendiff CI
+name: Analyzer CI
 
 on: push
 jobs:
