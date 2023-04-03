@@ -2,6 +2,15 @@ class DBManager:
     def __init__(self, conn):
         self.conn = conn
 
+    def create_table(self):
+        with open("database.sql", "r") as file:
+            create_tables_query = file.read()
+
+        with self.conn.cursor() as cursor:
+            cursor.execute(create_tables_query)
+            self.conn.commit()
+
+
     def get_url_by_id(self, url_id):
         with self.conn.cursor() as cursor:
             cursor.execute(

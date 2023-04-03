@@ -19,6 +19,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 conn = psycopg2.connect(DATABASE_URL)
 db_manager = DBManager(conn)
+db_manager.create_table()
 
 
 @app.route('/')
