@@ -19,7 +19,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 conn = psycopg2.connect(DATABASE_URL)
 db_manager = DBManager(conn)
-db_manager.create_table()
+db_manager.create_tables()
 
 
 @app.route('/')
@@ -50,12 +50,21 @@ def add_url():
 
 @app.route('/urls')
 def urls():
-    all_urls = db_manager.get_all_urls()
-    return render_template('urls.html', urls=all_urls)
+    all_urls = db_manager.get_all_urls_with_last_check_date()
+    print(all_urls)
+    return render_template('urls.html', urls_data=all_urls)
 
 
 @app.route('/urls/<int:url_id>')
 def url(url_id):
     messages = get_flashed_messages(with_categories=True)
     url = db_manager.get_url_by_id(url_id)
-    return render_template('url.html', url=url, messages=messages)
+    data_checks = db_manager.get_check_url(url_id)
+    return render_template('url.html', url=url,
+                           messages=messages, data=data_checks)
+
+
+@app.post('/urls/<id>/checks')
+def add_check_url(id):
+    db_manager.add_check(id)
+    return redirect(url_for('url', url_id=id))
