@@ -44,7 +44,7 @@ class DBManager:
         return result
 
     def create_tables(self):
-        with open("database.sql", "r") as file:
+        with open("page_analyzer/database.sql", "r") as file:
             create_tables_query = file.read()
         self.__execute_query(create_tables_query)
 
