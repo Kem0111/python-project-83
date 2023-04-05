@@ -1,14 +1,7 @@
-from urllib.parse import urlparse, urlunparse
+from urllib.parse import urlparse
 
 
 def normalize_url(url):
     parsed_url = urlparse(url)
-    normalized_url = urlunparse((
-        parsed_url.scheme,
-        parsed_url.netloc.lower(),
-        parsed_url.path.rstrip('/'),
-        parsed_url.params,
-        parsed_url.query,
-        parsed_url.fragment
-    ))
-    return normalized_url
+    base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
+    return base_url.lower()

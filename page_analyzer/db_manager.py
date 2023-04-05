@@ -1,26 +1,29 @@
 class DBManager:
     __QUERY = {
         'add_url': (
-                "INSERT INTO urls (name, created_at)\n"
-                "VALUES (%s, NOW()) RETURNING id"
-            ),
+            "INSERT INTO urls (name, created_at)\n"
+            "VALUES (%s, NOW()) RETURNING id"
+        ),
         'get_url_id': "SELECT id FROM urls WHERE name = %s",
         'get_url_by_id': "SELECT id, name, created_at FROM urls WHERE id = %s",
         'get_urls': (
             """
-            SELECT urls.id, urls.name, MAX(url_checks.created_at)
+            SELECT
+            urls.id, urls.name, MAX(url_checks.created_at),
+            url_checks.status_code
             FROM urls
             LEFT JOIN url_checks ON urls.id = url_checks.url_id
-            GROUP BY urls.id
+            GROUP BY urls.id, urls.name, url_checks.status_code
             ORDER BY urls.id DESC
             """
         ),
         'add_check': (
-            "INSERT INTO url_checks (url_id, created_at)\n"
-            "VALUES (%s, NOW())"
+            "INSERT INTO url_checks "
+            "(url_id, status_code, h1, title, description, created_at)\n"
+            "VALUES (%s, %s, %s, %s, %s, NOW())"
         ),
         'get_check_url': (
-            "SELECT id, h1, status_code, title, description, created_at\n"
+            "SELECT id, status_code, h1, title, description, created_at\n"
             "FROM url_checks WHERE url_id = %s"
         )
     }
@@ -59,12 +62,12 @@ class DBManager:
                                           (url,), fetch='one')[0]
         return url_id, bool(result)
 
-    def add_check(self, url_id):
-        self.__execute_query(self.__QUERY['add_check'], (url_id,))
+    def add_check(self, data):
+        self.__execute_query(self.__QUERY['add_check'], data)
 
     def get_check_url(self, url_id):
         return self.__execute_query(self.__QUERY['get_check_url'],
                                     (url_id,), fetch='all')
 
-    def get_all_urls_with_last_check_date(self):
+    def get_all_urls(self):
         return self.__execute_query(self.__QUERY['get_urls'], fetch='all')

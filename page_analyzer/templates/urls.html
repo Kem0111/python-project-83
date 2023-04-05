@@ -18,18 +18,11 @@
     {% for url_data in urls_data %}
         <tr>
             <td>{{ url_data[0] }}</td>
-            <td><a href="{{ url_for('url', url_id=url_data[0]) }}">{{ url_data[1] }}</a></td>
-            <td>{{ url_data[2] }}</td>
-            <td>Код ответа</td>
+            <td><a href="{{ url_for('get_url', url_id=url_data[0]) }}">{{ url_data[1] }}</a></td>
+            <td>{{ url_data[2] or ''}}</td>
+            <td>{{ url_data[3] or ''}}</td>
         </tr>
     {% endfor %}
-    {% else %}
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
 {% endif %}
     </tbody>
   </table>

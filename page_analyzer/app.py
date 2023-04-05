@@ -4,6 +4,8 @@ import psycopg2
 from page_analyzer.validate import validator
 from page_analyzer.parser import normalize_url
 from page_analyzer.db_manager import DBManager
+from page_analyzer.scraper import request_to_url
+from page_analyzer.html_parser import parse_html_content
 from flask import (Flask,
                    render_template,
                    redirect, request,
@@ -45,18 +47,17 @@ def add_url():
     else:
         flash("Cтраница успешно добавлена", "success")
 
-    return redirect(url_for('url', url_id=url_id))
+    return redirect(url_for('get_url', url_id=url_id))
 
 
 @app.route('/urls')
-def urls():
-    all_urls = db_manager.get_all_urls_with_last_check_date()
-    print(all_urls)
+def get_urls():
+    all_urls = db_manager.get_all_urls()
     return render_template('urls.html', urls_data=all_urls)
 
 
 @app.route('/urls/<int:url_id>')
-def url(url_id):
+def get_url(url_id):
     messages = get_flashed_messages(with_categories=True)
     url = db_manager.get_url_by_id(url_id)
     data_checks = db_manager.get_check_url(url_id)
@@ -66,5 +67,16 @@ def url(url_id):
 
 @app.post('/urls/<id>/checks')
 def add_check_url(id):
-    db_manager.add_check(id)
-    return redirect(url_for('url', url_id=id))
+    url = request.form['url']
+    status_code, text = request_to_url(url)
+    if status_code is None:
+        flash('Произошла ошибка при проверке', 'error')
+        return redirect(url_for('get_url', url_id=id))
+    website_data = parse_html_content(text)
+    db_manager.add_check((id, status_code, *website_data))
+    return redirect(url_for('get_url', url_id=id))
+
+
+@app.errorhandler(404)
+def page_not_found_error(error):
+    return render_template('error.html'), 404

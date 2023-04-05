@@ -6,10 +6,12 @@
   {% for category, message in messages %}
     {% if category == 'warning' %}
       <div class="alert alert-info" role="alert">
-    {% else %}
+    {% elif category == 'success' %}
       <div class="alert alert-success" role="alert">
+    {% else %}
+      <div class="alert alert-danger" role="alert">
     {% endif %}
-    <h3 class="{{ category }}">{{ message }}</h3></div>
+    <h4 class="{{ category }}">{{ message }}</h4></div>
   {% endfor %}
 {% endif %}
 <main class="flex-grow-1">
@@ -34,8 +36,9 @@
     </table>
   </div>
     <h2 class="mt-5 mb-3">Проверки</h2>
-    <form method="post" action="{{ url_for('add_check_url', id=url[0]) }}">
-    <input type="submit" class="btn btn-primary" value="Запустить проверку">
+    <form method="post" action="{{ url_for('add_check_url', id=url[0])}}">
+      <input type="hidden" name="url" value="{{ url[1] }}">
+      <input type="submit" class="btn btn-primary" value="Запустить проверку">
     </form>
   <div>
     <table class="table table-bordered table-hover mt-2" data-test="checks">

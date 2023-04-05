@@ -11,6 +11,7 @@ python = "^3.11"
 flask = "^2.2.3"
 flake8 = "^6.0.0"
 pytest = "^7.2.2"
+beautifulsoup4 = "^4.12.0"
 pytest-cov = "^4.0.0"
 coverage = "^7.2.2"
 gunicorn = "^20.1.0"
@@ -19,6 +20,12 @@ requests = "^2.28.2"
 validators = "^0.20.0"
 psycopg2-binary = "^2.9.6"
 
+
+
+
+[tool.poetry.group.dev.dependencies]
+flask-testing = "^0.8.1"
+blinker = "^1.6"
 
 [build-system]
 requires = ["poetry-core"]
