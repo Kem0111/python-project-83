@@ -1,3 +1,7 @@
+import os
+from pathlib import Path
+
+
 class DBManager:
     __QUERY = {
         'add_url': (
@@ -44,7 +48,10 @@ class DBManager:
         return result
 
     def create_tables(self):
-        with open("page_analyzer/database.sql", "r") as file:
+        project_root = Path(__file__).resolve().parents[1]
+        database_file_path = project_root / "database.sql"
+
+        with open(database_file_path, "r") as file:
             create_tables_query = file.read()
         self.__execute_query(create_tables_query)
 
