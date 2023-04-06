@@ -42,7 +42,7 @@ lxml = ["lxml"]
 name = "blinker"
 version = "1.6"
 description = "Fast, simple object-to-object and broadcast signaling"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -314,7 +314,7 @@ dotenv = ["python-dotenv"]
 name = "flask-testing"
 version = "0.8.1"
 description = "Unit testing for Flask"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 files = [
@@ -720,7 +720,7 @@ files = [
 name = "typing-extensions"
 version = "4.5.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -783,4 +783,4 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "1dc97885869216f83b5f2944b8bda510f2cd5b1ef62921e5f8bfcade6b35a2c9"
+content-hash = "8eee0fbc106ad0c7c3542bceea01837d56f9ea4caa32aebdbc17f0e5de911bb3"
