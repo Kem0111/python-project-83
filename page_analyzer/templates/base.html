@@ -17,6 +17,13 @@
             </div>
         </nav>
     </header>
+   {% if messages %}
+  {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+      </div>
+  {% endfor %}
+{% endif %}
     {% block content %}{% endblock %}
   </body>
 </html>

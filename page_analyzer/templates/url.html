@@ -2,13 +2,6 @@
 
 {% block title %}Информация о сайте - Python Page Analyzer{% endblock %}
 {% block content %}
-{% if messages %}
-  {% for category, message in messages %}
-      <div class="alert alert-{{ category }}" role="alert">
-        {{ message }}
-      </div>
-  {% endfor %}
-{% endif %}
 <main class="flex-grow-1">
     <div class="container-lg mt-3">
       <h1>Сайт: {{ url[1] }}</h1>
