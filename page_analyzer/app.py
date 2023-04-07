@@ -35,7 +35,7 @@ def add_url():
 
     if not correct_url:
         flash('Некорректный URL', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('index')), 422
 
     url_id, url_exists = db_manager.add_url(normal_url)
 
@@ -67,10 +67,11 @@ def add_check_url(id):
     url = request.form['url']
     status_code, text = request_to_url(url)
     if status_code is None:
-        flash('Произошла ошибка при проверке', 'error')
+        flash('Произошла ошибка при проверке', 'error'), 422
         return redirect(url_for('get_url', url_id=id))
     website_data = parse_html_content(text)
     db_manager.add_check((id, status_code, *website_data))
+    flash('Cтраница успешно проверена', 'success')
     return redirect(url_for('get_url', url_id=id))
 
 
