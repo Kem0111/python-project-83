@@ -26,5 +26,6 @@ def test_request_to_url_not_found():
         mock_get.return_value = MagicMock(status_code=404, text="Not Found")
         status_code, text = request_to_url("https://www.example.com")
 
-    assert status_code == 404
-    assert text == "Not Found"
+    assert status_code is None
+    assert text is None
+

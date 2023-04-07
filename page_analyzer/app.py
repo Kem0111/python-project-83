@@ -67,11 +67,13 @@ def add_check_url(id):
     url = request.form['url']
     status_code, text = request_to_url(url)
     print(status_code)
+
     if status_code is None:
         flash('Произошла ошибка при проверке', 'danger')
         messages = get_flashed_messages(with_categories=True)
         url_data = db_manager.get_url_by_id(id)
         return render_template('url.html', url=url_data, messages=messages), 422
+
     website_data = parse_html_content(text)
     db_manager.add_check((id, status_code, *website_data))
     flash('Cтраница успешно проверена', 'success')
