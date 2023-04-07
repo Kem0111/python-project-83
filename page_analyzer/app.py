@@ -23,8 +23,7 @@ db_manager.create_tables()
 
 @app.route('/')
 def index():
-    messages = get_flashed_messages(with_categories=True)
-    return render_template('index.html', messages=messages)
+    return render_template('index.html')
 
 
 @app.post('/urls')
@@ -35,7 +34,8 @@ def add_url():
 
     if not correct_url:
         flash('Некорректный URL', 'danger')
-        return redirect(url_for('index'))
+        messages = get_flashed_messages(with_categories=True)
+        return render_template('index.html', messages=messages), 422
 
     url_id, url_exists = db_manager.add_url(normal_url)
 
@@ -44,7 +44,7 @@ def add_url():
     else:
         flash("Cтраница успешно добавлена", "success")
 
-    return redirect(url_for('get_url', url_id=url_id))
+    return redirect(url_for('get_url', url_id=url_id)), 302
 
 
 @app.route('/urls')
@@ -67,8 +67,10 @@ def add_check_url(id):
     url = request.form['url']
     status_code, text = request_to_url(url)
     if status_code is None:
-        flash('Произошла ошибка при проверке', 'danger'), 422
-        return redirect(url_for('get_url', url_id=id))
+        flash('Произошла ошибка при проверке', 'danger')
+        messages = get_flashed_messages(with_categories=True)
+        url_data = db_manager.get_url_by_id(id)
+        return render_template('url.html', url=url_data, messages=messages), 422
     website_data = parse_html_content(text)
     db_manager.add_check((id, status_code, *website_data))
     flash('Cтраница успешно проверена', 'success')
