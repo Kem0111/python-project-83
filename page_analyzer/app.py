@@ -42,7 +42,7 @@ def add_url():
     if url_exists:
         flash("Cтраница уже существует", "info")
     else:
-        flash("Cтраница успешно добавлена", "success")
+        flash("Страница успешно добавлена", "success")
 
     return redirect(url_for('get_url', url_id=url_id)), 302
 
