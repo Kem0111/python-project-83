@@ -44,7 +44,7 @@ def add_url():
     else:
         flash("Страница успешно добавлена", "success")
 
-    return redirect(url_for('get_url', url_id=url_id)), 302
+    return redirect(url_for('get_url', url_id=url_id))
 
 
 @app.route('/urls')
@@ -66,6 +66,7 @@ def get_url(url_id):
 def add_check_url(id):
     url = request.form['url']
     status_code, text = request_to_url(url)
+    print(status_code)
     if status_code is None:
         flash('Произошла ошибка при проверке', 'danger')
         messages = get_flashed_messages(with_categories=True)

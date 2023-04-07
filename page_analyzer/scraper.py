@@ -14,6 +14,8 @@ def request_to_url(url: str) -> Tuple[Optional[int], Optional[str]]:
     """
     try:
         response = requests.get(url)
+        if response.status_code != 200:
+            raise RequestException
         return response.status_code, response.text
     except RequestException:
         return None, None
