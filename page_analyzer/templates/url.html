@@ -4,14 +4,9 @@
 {% block content %}
 {% if messages %}
   {% for category, message in messages %}
-    {% if category == 'warning' %}
-      <div class="alert alert-info" role="alert">
-    {% elif category == 'success' %}
-      <div class="alert alert-success" role="alert">
-    {% else %}
-      <div class="alert alert-danger" role="alert">
-    {% endif %}
-    <h4 class="{{ category }}">{{ message }}</h4></div>
+      <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+      </div>
   {% endfor %}
 {% endif %}
 <main class="flex-grow-1">
