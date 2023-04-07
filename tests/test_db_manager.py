@@ -1,24 +1,16 @@
 import pytest
-import psycopg2
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 from page_analyzer.db_manager import DBManager
 
 
 @pytest.fixture
-def mock_conn():
-    conn = MagicMock(spec_set=psycopg2.connect)
-    yield conn
-
-
-@pytest.fixture
-def db_manager(mock_conn):
-    return DBManager(mock_conn)
+def db_manager():
+    return DBManager()
 
 
 def with_mock_execute_query(test):
     def wrapper(db_manager, *args, **kwargs):
-        with patch.object(db_manager,
-                          "_DBManager__execute_query") as mock_execute_query:
+        with patch.object(db_manager, "_execute_query") as mock_execute_query:
             test(db_manager, mock_execute_query=mock_execute_query,
                  *args, **kwargs)
 
@@ -46,7 +38,7 @@ def test_add_check(db_manager, mock_execute_query):
     data = (1, 200, "Test H1", "Test Title", "Test Description")
     db_manager.add_check(data)
     mock_execute_query.assert_called_with(
-        db_manager._DBManager__QUERY['add_check'], data
+        db_manager._QUERY['add_check'], data
     )
 
 
@@ -58,7 +50,7 @@ def test_get_url_by_id(db_manager, mock_execute_query):
     result = db_manager.get_url_by_id(url_id)
     assert result == expected_result
     mock_execute_query.assert_called_with(
-        db_manager._DBManager__QUERY['get_url_by_id'], (url_id,), fetch='one'
+        db_manager._QUERY['get_url_by_id'], (url_id,), fetch='one'
     )
 
 
@@ -73,7 +65,7 @@ def test_get_check_url(db_manager, mock_execute_query):
     result = db_manager.get_check_url(url_id)
     assert result == expected_result
     mock_execute_query.assert_called_with(
-        db_manager._DBManager__QUERY['get_check_url'], (url_id,), fetch='all'
+        db_manager._QUERY['get_check_url'], (url_id,), fetch='all'
     )
 
 
@@ -86,5 +78,5 @@ def test_get_all_urls(db_manager, mock_execute_query):
     result = db_manager.get_all_urls()
     assert result == expected_result
     mock_execute_query.assert_called_with(
-        db_manager._DBManager__QUERY['get_urls'], fetch='all'
+        db_manager._QUERY['get_urls'], fetch='all'
     )

@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 import os
-import psycopg2
 from page_analyzer.validate import validator
 from page_analyzer.parser import normalize_url
 from page_analyzer.db_manager import DBManager
@@ -16,10 +15,9 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
-DATABASE_URL = os.getenv("DATABASE_URL")
 
-conn = psycopg2.connect(DATABASE_URL)
-db_manager = DBManager(conn)
+
+db_manager = DBManager()
 db_manager.create_tables()
 
 
