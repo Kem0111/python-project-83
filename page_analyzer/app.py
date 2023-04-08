@@ -59,7 +59,7 @@ def get_url(url_id):
     url = db_manager.get_url_by_id(url_id)
     data_checks = db_manager.get_check_url(url_id)
     return render_template('url.html', url=url,
-                           messages=messages, data=data_checks), 200
+                           messages=messages, data=data_checks)
 
 
 @app.post('/urls/<id>/checks')
@@ -76,7 +76,7 @@ def add_check_url(id):
 
     website_data = parse_html_content(text)
     db_manager.add_check((id, status_code, *website_data))
-    flash('Cтраница успешно проверена', 'success')
+    flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_url', url_id=id))
 
 
