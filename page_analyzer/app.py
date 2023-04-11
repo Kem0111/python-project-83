@@ -40,7 +40,7 @@ def add_url():
     url_id, url_exists = db_manager.add_url(normal_url)
 
     if url_exists:
-        flash("Cтраница уже существует", "info")
+        flash("Страница уже существует", "info")
     else:
         flash("Страница успешно добавлена", "success")
 
