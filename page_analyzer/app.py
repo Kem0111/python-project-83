@@ -41,8 +41,6 @@ def add_url():
 
     if url_exists:
         flash("Cтраница уже существует", "info")
-        messages = get_flashed_messages(with_categories=True)
-        return render_template('index.html', messages=messages), 200
     else:
         flash("Страница успешно добавлена", "success")
 
