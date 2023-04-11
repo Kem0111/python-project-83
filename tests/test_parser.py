@@ -1,4 +1,4 @@
-from page_analyzer.parser import normalize_url
+from page_analyzer.url_parser import normalize_url
 import pytest
 
 

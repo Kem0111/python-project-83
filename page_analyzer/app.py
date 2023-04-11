@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 from page_analyzer.validate import validator
-from page_analyzer.parser import normalize_url
+from page_analyzer.url_parser import normalize_url
 from page_analyzer.db_manager import DBManager
 from page_analyzer.scraper import request_to_url
 from page_analyzer.html_parser import parse_html_content
@@ -23,11 +23,17 @@ db_manager.create_tables()
 
 @app.route('/')
 def index():
+    """Render the main page of the application."""
+
     return render_template('index.html')
 
 
 @app.post('/urls')
 def add_url():
+    """
+    Add URL to the database and redirect to the URL's details page.
+    Display a message if the URL is invalid or already exists.
+    """
     url = request.form['url']
     normal_url = normalize_url(url)
     correct_url = validator(normal_url)
@@ -49,12 +55,21 @@ def add_url():
 
 @app.route('/urls')
 def get_urls():
+    """
+    Render a page displaying a list of all URLs
+    and their check information.
+    """
+
     all_urls = db_manager.get_all_urls()
     return render_template('urls.html', urls_data=all_urls)
 
 
 @app.route('/urls/<int:url_id>')
 def get_url(url_id):
+    """
+    Render a page displaying detailed information about a specific URL
+    and its check results.
+    """
     messages = get_flashed_messages(with_categories=True)
     url = db_manager.get_url_by_id(url_id)
     data_checks = db_manager.get_check_url(url_id)
@@ -64,6 +79,12 @@ def get_url(url_id):
 
 @app.post('/urls/<id>/checks')
 def add_check_url(id):
+    """
+    Perform a check on a specific URL and store the check results
+    in the database.
+    Redirect to the URL's details page and display a message
+    if the check was successful.
+    """
     url = request.form['url']
     status_code, text = request_to_url(url)
     print(status_code)
@@ -82,4 +103,6 @@ def add_check_url(id):
 
 @app.errorhandler(404)
 def page_not_found_error(error):
+    """Render a custom 404 error page."""
+
     return render_template('error.html'), 404

@@ -67,7 +67,10 @@ class DBManager:
         return result
 
     def create_tables(self) -> None:
-        """Creates tables by executing SQL script from the 'database.sql'."""
+        """
+        Creates tables if not exist by executing
+        SQL script from the 'database.sql'.
+        """
 
         project_root = Path(__file__).resolve().parents[1]
         database_file_path = project_root / "database.sql"
