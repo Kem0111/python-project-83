@@ -28,4 +28,3 @@ def test_request_to_url_not_found():
 
     assert status_code is None
     assert text is None
-
